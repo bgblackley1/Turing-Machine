@@ -5,6 +5,7 @@ class tkinterclass:
 
     def __init__(self):
         self.window = tk.Tk()
+        self.file_handler = FileHandling()
         self.window.title("Turing Machine")
         file = open("rules.txt","r+")
         self.set_delay = 1000
@@ -53,7 +54,7 @@ class tkinterclass:
         self.direction = tk.Entry()
         self.direction.grid(column = 9, row = 1)
 
-        self.submit = tk.Button(text ="Submit Rule", command = self.set_rule)
+        self.submit = tk.Button(text ="Submit Rule", command = self.fetch_input)
         self.submit.grid(column = 0, row = 2)
 
         self.next = tk.Button(text ="Next", command = self.starting_tape)
@@ -61,17 +62,11 @@ class tkinterclass:
 
     def fetch_input(self):
         current_state = self.current_state.get()
-        value_on_tape = self.value_input.get()
-        next_state = self.state_2.get()
-        next_value = self.value_input2.get()
-        direction = self.direction_entry.get()
-        return(current_state,value_on_tape,next_state,next_value,direction)
-        
-    def set_rule(self):
-        rules = open("rules.txt", "a")
-        current_state,value_on_tape,next_state,next_value,direction = self.fetch_input()
-        rules.writelines(current_state+','+value_on_tape+','+next_state+','+next_value+','+direction +'\n')
-        rules.close()
+        value_on_tape = self.value_on_tape.get()
+        next_state = self.next_state.get()
+        next_value = self.next_value.get()
+        direction = self.direction.get()
+        self.file_handler(current_state,value_on_tape,next_state,next_value,direction)
         self.display_rules()
 
     def display_rules(self):
@@ -82,12 +77,6 @@ class tkinterclass:
             self.rule = tk.Label(self.window, text = rule)
             self.rule.grid(row = row, column = 0)
             row += 1
-
-    def fetch_inputs(self):
-        text_entry = self.text_box.get("0.0",END)
-        file = open("rules.txt", "a")
-        file.write(text_entry)
-        file.close()
 
     def Many_inputs(self):
         self.window.destroy()
@@ -110,23 +99,16 @@ class tkinterclass:
         self.presets = tk.OptionMenu(self.window ,pre_set , *options, command=self.input_preset)
         self.presets.grid(column=1, row=3)
 
-    def get_preset(self, option):
-        with open(option+'.txt') as file:
-            data = file.readlines()
-        return(data)
+    def fetch_inputs(self):
+        text_entry = self.text_box.get("0.0",END)
+        self.file_handler.set_inputs(text_entry)
     
     def input_preset(self, option):
-        data = self.get_preset(option)
+        data = self.file_handler.get_preset(option)
         self.text_box.delete(0.0, 'end')
         for i in range(len(data)):
             self.text_box.insert(float(i+1), data[i])
-        self.set_preset(data)
-
-    def set_preset(self,data):
-        file = open("rules.txt", "a")
-        for i in range(len(data)):
-            file.write(data[i])
-        file.close
+        self.file_handler.set_preset(data)
         
     def starting_tape(self):
         self.window.destroy()
@@ -220,6 +202,37 @@ class tkinterclass:
         except:
             self.delay = self.set_delay / 100
             
+class FileHandling():
+        
+    def set_rule(self, current_state,value_on_tape,next_state,next_value,direction):
+        rules = open("rules.txt", "a")
+        current_state,value_on_tape,next_state,next_value,direction = self.fetch_input()
+        rules.writelines(current_state+','+value_on_tape+','+next_state+','+next_value+','+direction +'\n')
+        rules.close()
+
+    def set_inputs(self, input):
+        file = open("rules.txt", "a")
+        file.write(input)
+        file.close()
+
+    def get_preset(self, option):
+        with open(option+'.txt') as file:
+            data = file.readlines()
+        return(data)
+    
+    def input_preset(self, option):
+        data = self.get_preset(option)
+        self.text_box.delete(0.0, 'end')
+        for i in range(len(data)):
+            self.text_box.insert(float(i+1), data[i])
+        self.set_preset(data)
+
+    def set_preset(self,data):
+        file = open("rules.txt", "a")
+        for i in range(len(data)):
+            file.write(data[i])
+        file.close
+
 class Turing_Machine:
     
     def __init__(self):
