@@ -7,11 +7,11 @@ class tkinterclass:
         self.machine = Turing_Machine()
         self.direction = '>'
         self.input_to_tape = list(input)
-        self.run_machine()
+        self.get_next_values()
         self.NP()
 
-    def run_machine(self):
-        while self.direction != '-' and self.runs < 1000:
+    def get_next_values(self):
+        if self.direction != '-' and self.runs < 1000:
             try:
                 state, self.value, self.direction = self.machine.run_machine(self.input_to_tape[self.pointer])
                 self.runs += 1
@@ -22,24 +22,31 @@ class tkinterclass:
                     self.input_to_tape.append('')
                 state, self.value, self.direction = self.machine.run_machine(self.input_to_tape[self.pointer])
                 self.runs += 1
-            if self.pointer < len(self.input_to_tape) and self.pointer >= 0:
-                self.input_to_tape[self.pointer] = self.value
-            elif self.pointer > len(self.input_to_tape):
-                if self.value != '':
-                    self.input_to_tape.append(self.value)
-            else:
-                if self.value != '':
-                    self.input_to_tape.insert(0, self.value)
-            if self.direction == '>':
-                self.pointer += 1
-            elif self.direction == '<':
-                self.pointer -= 1
+            self.update_tape()
+
+    def update_tape(self):            
+        if self.pointer < len(self.input_to_tape) and self.pointer >= 0:
+            self.input_to_tape[self.pointer] = self.value
+        elif self.pointer > len(self.input_to_tape):
+            if self.value != '':
+                self.input_to_tape.append(self.value)
+        else:
+            if self.value != '':
+                self.input_to_tape.insert(0, self.value)
+        self.update_pointer()
+    
+    def update_pointer(self):
+        if self.direction == '>':
+            self.pointer += 1
+        elif self.direction == '<':
+            self.pointer -= 1
+        self.get_next_values()
         
     def NP(self):
         if self.runs < len(self.input)**2:
-            print('P')
+            print('P', self.runs)
         else:
-            print('NP') 
+            print('NP', self.runs) 
 
 class Turing_Machine:
     
