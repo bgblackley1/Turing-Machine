@@ -1,0 +1,39 @@
+def run_machine(self):
+        if self.direction != '-' and self.runs < 1000:
+            state, self.value, self.direction = self.machine.run_machine(self.tape[10]['text'])
+            self.state['text'] = 'state: ' + state
+            self.runs += 1
+            self.window.after(self.delay, self.update_pointer_value)
+        elif self.runs >= 1000:
+            self.state['text'] = 'state: Timout'
+            
+    def update_pointer_value(self):
+        self.tape[10]['text'] = self.value
+        if 10-self.back_pointer < len(self.input_to_tape) and 10-self.back_pointer >= 0:
+            self.input_to_tape[10-self.back_pointer] = self.value
+        elif 10-self.back_pointer < len(self.input_to_tape):
+            if self.value != '':
+                self.input_to_tape.append(self.value)
+        else:
+            if self.value != '':
+                self.input_to_tape.insert(0, self.value)
+        self.window.after(self.delay, self.update_tape)
+    
+    def update_tape(self):
+        if self.direction == '>':
+            self.back_pointer -= 1
+            for i in range(self.back_pointer, 21):
+                if i >= 0:
+                    try: 
+                        self.tape[i]['text'] = self.input_to_tape[i-self.back_pointer]
+                    except: 
+                        self.tape[i]['text'] = ''
+        elif self.direction == '<':
+            self.back_pointer += 1
+            for i in range(self.back_pointer, 21):
+                if i >= 0:
+                    try: 
+                        self.tape[i]['text'] = self.input_to_tape[i-self.back_pointer]
+                    except: 
+                        self.tape[i]['text'] = ''
+        self.window.after(self.delay, self.run_machine)
