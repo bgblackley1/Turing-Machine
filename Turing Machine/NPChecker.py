@@ -37,9 +37,9 @@ class tkinterclass:
         
     def NP(self):
         if self.runs < len(self.input)**2:
-            print('NP')
+            print('P')
         else:
-            print('not NP') 
+            print('NP') 
 
 class Turing_Machine:
     
