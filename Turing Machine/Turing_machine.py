@@ -15,6 +15,8 @@ class tkinterclass:
         self.rules_type_input()
 
     def rules_type_input(self):
+        self.window.destroy()
+        self.window = tk.Tk()
         self.input_type_question_label = tk.Label(self.window, text="How would you like to input the rules?", font = ("Calbri Body", 10))
         self.input_type_question_label.grid(column=0, row=0, columnspan=2)
         self.single_input_button = tk.Button(text ="One at a time", command = self.One_input_at_a_time)
@@ -136,6 +138,9 @@ class tkinterclass:
         self.speed_scale.grid(column = 5, row = 0, columnspan=3, sticky='we')
         self.speed_scale_label = tk.Label(self.window, text="speed (%): ", font = ("Calbri Body", 15))
         self.speed_scale_label.grid(column = 2, row = 0, columnspan=3)
+        self.back = tk.Button(text ="Back", command = self.rules_type_input, height=2,width=6,font = ("Calbri Body", 10))
+        self.back.grid(column = 20, row = 0)
+
 
     def add_input_to_tape(self):
             self.input_to_tape = self.input_entry.get()
