@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.constants import END
+from NPChecker import NPChecker
 
 class tkinterclass:
 
@@ -14,9 +15,26 @@ class tkinterclass:
         file.close()
         self.rules_type_input()
 
+    def NPWindow(self):
+        self.window = tk.Tk()
+        self.window.title("Turing Machine")
+        NP_Checker = NPChecker(self.input_entry.get())
+        NP_Checker.get_next_values()
+        P, runs = NP_Checker.NP()
+        if P == 'P':
+            self.title_label = tk.Label(self.window, text="This algorithm is solvable in polynomial time")
+            self.title_label.grid(column=0, row=0)
+        else:
+            self.title_label = tk.Label(self.window, text="This algorithm is not solvable in polynomial time")
+            self.title_label.grid(column=0, row=0)
+
+        text = "It ran " + str(runs) + " times, the length of the input was " + str(len(self.input_entry.get())) + " sdigits long"
+        self.current_state_label = tk.Label(self.window, text=text)
+        self.current_state_label.grid(column= 0 , row = 1)
+
     def rules_type_input(self):
         self.window.destroy()
-        self.window = tk.Tk()
+        self.window = tk.Tk() 
         self.input_type_question_label = tk.Label(self.window, text="How would you like to input the rules?", font = ("Calbri Body", 10))
         self.input_type_question_label.grid(column=0, row=0, columnspan=2)
         self.single_input_button = tk.Button(text ="One at a time", command = self.One_input_at_a_time)
@@ -140,6 +158,8 @@ class tkinterclass:
         self.speed_scale_label.grid(column = 2, row = 0, columnspan=3)
         self.back = tk.Button(text ="Back", command = self.rules_type_input, height=2,width=6,font = ("Calbri Body", 10))
         self.back.grid(column = 20, row = 0)
+        self.NP = tk.Button(text ="Check if NP", command = self.NPWindow, height=2,width=10,font = ("Calbri Body", 10))
+        self.NP.grid(column = 2, row = 6, columnspan=3)
 
 
     def add_input_to_tape(self):

@@ -1,4 +1,4 @@
-class tkinterclass:
+class NPChecker:
     
     def __init__(self, input):
         self.runs = 0
@@ -7,8 +7,6 @@ class tkinterclass:
         self.machine = Turing_Machine()
         self.direction = '>'
         self.input_to_tape = list(input)
-        self.get_next_values()
-        self.NP()
 
     def get_next_values(self):
         if self.direction != '-' and self.runs < 1000:
@@ -44,9 +42,9 @@ class tkinterclass:
         
     def NP(self):
         if self.runs < len(self.input)**2:
-            print('P', self.runs)
+            return('P', self.runs)
         else:
-            print('NP', self.runs) 
+            return('NP', self.runs) 
 
 class Turing_Machine:
     
@@ -56,7 +54,7 @@ class Turing_Machine:
         self.create_dictionary()
 
     def create_dictionary(self):
-        with open('Palindrome_checker.txt') as f:
+        with open('rules.txt') as f:
             data = f.readlines()
         for rule in data:
             self.rules.append(rule.split(','))
@@ -74,4 +72,3 @@ class Turing_Machine:
         except:
             return('qReject', value, '-')
 
-machine = tkinterclass('10101')
