@@ -1,7 +1,10 @@
+from Turing_machine import Turing_Machine
+
 class NPChecker:
     
     def __init__(self, input):
         self.runs = 0
+        self.final_state = 'qReject'
         self.input = input
         self.pointer = 0
         self.machine = Turing_Machine()
@@ -20,6 +23,8 @@ class NPChecker:
                     self.input_to_tape.append('')
                 state, self.value, self.direction = self.machine.run_machine(self.input_to_tape[self.pointer])
                 self.runs += 1
+            if self.machine.state == 'qReject' or self.machine.state == 'qAccept':
+                self.final_state = self.machine.state    
             self.update_tape()
 
     def update_tape(self):            
@@ -44,7 +49,10 @@ class NPChecker:
         if self.runs < len(self.input)**2:
             return('P', self.runs)
         else:
-            return('NP', self.runs) 
+            return('NP', self.runs)
+
+    def list(self): 
+        return(self.final_state)
 
 class Turing_Machine:
     
@@ -70,5 +78,7 @@ class Turing_Machine:
             self.state = current[0]
             return(current[0], current[1], current[2])
         except:
+            self.state = 'qReject'
             return('qReject', value, '-')
+        
 

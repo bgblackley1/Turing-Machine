@@ -3,6 +3,7 @@ from tkinter.constants import END
 from NPChecker import NPChecker
 from FileHandling import FileHandling
 from Turing_machine import Turing_Machine
+from List_Values import List_Values
 
 class tkinterclass:
 
@@ -33,6 +34,32 @@ class tkinterclass:
         text = "It ran " + str(runs) + " times, the length of the input was " + str(len(self.input_entry.get())) + " digits long"
         self.current_state_label = tk.Label(self.window, text=text)
         self.current_state_label.grid(column= 0 , row = 1)
+
+    def ListWindow(self):
+        self.window = tk.Tk()
+        self.window.title("Turing Machine")
+        self.title_label = tk.Label(self.window, text="this function will loop through all values within 0 and a binary number, giving the output")
+        self.title_label.grid(column=0, row=0, columnspan=3)
+        self.end_value_label = tk.Label(self.window, text="What value would you like to end at")
+        self.end_value_label.grid(column= 0 , row = 1)
+        self.end_value = tk.Entry(self.window)
+        self.end_value.grid(column = 1, row = 1)
+        self.submit = tk.Button(self.window, text ="Run", command = self.ShowResult)
+        self.submit.grid(column = 2, row = 1)
+
+    def ShowResult(self):
+        end_value = int(self.end_value.get())
+        list_values = List_Values()
+        results = list_values.return_list(end_value)
+        self.window.destroy()
+        self.window = tk.Tk() 
+        for i in range(0, len(results)):
+            self.value_label = tk.Label(self.window, text=results[i][0])
+            self.value_label.grid(column=0, row=i)
+            self.value_label = tk.Label(self.window, text=results[i][1])
+            self.value_label.grid(column=1, row=i)
+            self.state_label = tk.Label(self.window, text=results[i][2])
+            self.state_label.grid(column= 2, row = i)
 
     def rules_type_input(self):
         self.window.destroy()
@@ -162,6 +189,8 @@ class tkinterclass:
         self.back.grid(column = 20, row = 0)
         self.NP = tk.Button(text ="Check if NP", command = self.NPWindow, height=2,width=10,font = ("Calbri Body", 10))
         self.NP.grid(column = 2, row = 6, columnspan=3)
+        self.NP = tk.Button(text ="List values", command = self.ListWindow, height=2,width=10,font = ("Calbri Body", 10))
+        self.NP.grid(column = 0, row = 6, columnspan=3)
 
 
     def add_input_to_tape(self):
