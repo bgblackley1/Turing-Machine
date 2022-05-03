@@ -17,6 +17,7 @@ class tkinterclass:
         file.truncate(0)
         file.close()
         self.rules_type_input()
+        self.preset_option = False
 
     def NPWindow(self):
         self.window = tk.Tk()
@@ -149,10 +150,12 @@ class tkinterclass:
         self.presets.grid(column=1, row=3)
 
     def fetch_inputs(self):
-        text_entry = self.text_box.get("0.0",END)
-        self.file_handler.set_inputs(text_entry)
+        if self.preset_option == False:
+            text_entry = self.text_box.get("0.0",END)
+            self.file_handler.set_inputs(text_entry)
     
     def input_preset(self, option):
+        self.preset_option = True
         data = self.file_handler.get_preset(option)
         self.text_box.delete(0.0, 'end')
         for i in range(len(data)):

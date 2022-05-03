@@ -15,15 +15,8 @@ class FileHandling():
         with open(option+'.txt') as file:
             data = file.readlines()
         return(data)
-    
-    def input_preset(self, option):
-        data = self.get_preset(option)
-        self.text_box.delete(0.0, 'end')
-        for i in range(len(data)):
-            self.text_box.insert(float(i+1), data[i])
-        self.set_preset(data)
 
-    def set_preset(self,data):
+    def set_preset(self, data):
         file = open("rules.txt", "a")
         for i in range(len(data)):
             file.write(data[i])
