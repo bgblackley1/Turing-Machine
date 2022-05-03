@@ -16,7 +16,7 @@ class test_NPChecker(unittest.TestCase):
         self.assertEqual(return_value, 'qAccept')
 
 
-    def test_machine_output_1(self):
+    def test_machine_output_NP(self):
         test_machine = NPChecker('1001')
         test_machine.machine.rules = [['q0', '0', 'q1', '0', '>\n'], ['q1', '0', 'q0', '0', '>\n'], ['q0', '1', 'q0', '1', '>\n'], ['q1', '1', 'q1', '1', '>\n'], ['q0', '', 'qAccept', '', '-']]
         test_machine.get_next_values()
