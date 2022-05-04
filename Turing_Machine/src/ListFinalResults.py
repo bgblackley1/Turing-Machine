@@ -1,10 +1,10 @@
 from msilib.schema import Binary
-from NPChecker import NPChecker
+from NonPolynomialChecker import NonPolynomialChecker
 
 
-class List_Values:
+class ListFinalResults:
     def __init__(self):
-        self.NP_Checker = NPChecker('0')
+        self.NP_Checker = NonPolynomialChecker('0')
 
     def return_list(self, end_value):
         results = []

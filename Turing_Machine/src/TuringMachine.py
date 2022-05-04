@@ -1,7 +1,7 @@
 from msilib.schema import File
 from FileHandling import FileHandling
 
-class Turing_Machine:
+class TuringMachine:
     
     def __init__(self):
         self.state = 'q0'

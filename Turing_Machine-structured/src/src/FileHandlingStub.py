@@ -1,6 +1,6 @@
-from File import File
+from FileHandlerAbstractClass import FileHandlerAbstractClass
 
-class FileHandling(File):
+class FileHandling(FileHandlerAbstractClass):
     
     rules = []
 

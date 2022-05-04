@@ -1,6 +1,6 @@
-from File import File
+from FileHandlerAbstractClass import FileHandlerAbstractClass
  
-class FileHandling(File):
+class FileHandling(FileHandlerAbstractClass):
         
     def set_rule(self, current_state,value_on_tape,next_state,next_value,direction):
         rules = open("rules.txt", "a")

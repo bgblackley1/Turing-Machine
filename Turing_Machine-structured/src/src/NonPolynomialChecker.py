@@ -1,13 +1,13 @@
-from Turing_machine import Turing_Machine
+from TuringMachine import TuringMachine
 
-class NPChecker:
+class NonPolynomialChecker:
     
     def __init__(self, input):
         self.runs = 0
         self.final_state = 'qReject'
         self.input = input
         self.pointer = 0
-        self.machine = Turing_Machine()
+        self.machine = TuringMachine()
         self.direction = '>'
         self.input_to_tape = list(input)
 

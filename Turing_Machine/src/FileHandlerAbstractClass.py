@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class File(ABC):
+class FileHandlerAbstractClass(ABC):
 
     def set_rule(self, current_state,value_on_tape,next_state,next_value,direction):
         pass

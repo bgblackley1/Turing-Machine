@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter.constants import END
-from NPChecker import NPChecker
+from NonPolynomialChecker import NonPolynomialChecker
 from FileHandling import FileHandling
-from Turing_machine import Turing_Machine
-from List_Values import List_Values
+from TuringMachine import TuringMachine
+from ListFinalResults import ListFinalResults
 
-class tkinterclass:
+class TuringMachineTkinter:
 
     def __init__(self):
         self.window = tk.Tk()
@@ -18,46 +18,46 @@ class tkinterclass:
         self.preset_option = False
 
     def NPWindow(self):
-        self.window = tk.Tk()
-        self.window.title("Turing Machine")
-        NP_Checker = NPChecker(self.input_entry.get())
+        self.window_np = tk.Tk()
+        self.window_np.title("Turing Machine")
+        NP_Checker = NonPolynomialChecker(self.input_entry.get())
         NP_Checker.get_next_values()
         P, runs = NP_Checker.NP()
         if P == 'P':
-            self.title_label = tk.Label(self.window, text="This algorithm is solvable in polynomial time")
+            self.title_label = tk.Label(self.window_np, text="This algorithm is solvable in polynomial time")
             self.title_label.grid(column=0, row=0)
         else:
-            self.title_label = tk.Label(self.window, text="This algorithm is not solvable in polynomial time")
+            self.title_label = tk.Label(self.window_np, text="This algorithm is not solvable in polynomial time")
             self.title_label.grid(column=0, row=0)
 
         text = "It ran " + str(runs) + " times, the length of the input was " + str(len(self.input_entry.get())) + " digits long"
-        self.current_state_label = tk.Label(self.window, text=text)
+        self.current_state_label = tk.Label(self.window_np, text=text)
         self.current_state_label.grid(column= 0 , row = 1)
 
     def ListWindow(self):
-        self.window = tk.Tk()
-        self.window.title("Turing Machine")
-        self.title_label = tk.Label(self.window, text="this function will loop through all values within 0 and a binary number, giving the output")
+        self.window_list = tk.Tk()
+        self.window_list.title("Turing Machine")
+        self.title_label = tk.Label(self.window_list, text="this function will loop through all values within 0 and a binary number, giving the output")
         self.title_label.grid(column=0, row=0, columnspan=3)
-        self.end_value_label = tk.Label(self.window, text="What value would you like to end at")
+        self.end_value_label = tk.Label(self.window_list, text="What value would you like to end at")
         self.end_value_label.grid(column= 0 , row = 1)
-        self.end_value = tk.Entry(self.window)
+        self.end_value = tk.Entry(self.window_list)
         self.end_value.grid(column = 1, row = 1)
-        self.submit = tk.Button(self.window, text ="Run", command = self.ShowResult)
+        self.submit = tk.Button(self.window_list, text ="Run", command = self.ShowResult)
         self.submit.grid(column = 2, row = 1)
 
     def ShowResult(self):
         end_value = int(self.end_value.get())
-        list_values = List_Values()
+        list_values = ListFinalResults()
         results = list_values.return_list(end_value)
-        self.window.destroy()
-        self.window = tk.Tk() 
+        self.window_list.destroy()
+        self.window_show_results = tk.Tk()
         for i in range(0, len(results)):
-            self.value_label = tk.Label(self.window, text=results[i][0])
+            self.value_label = tk.Label(self.window_show_results, text=results[i][0])
             self.value_label.grid(column=0, row=i)
-            self.value_label = tk.Label(self.window, text=results[i][1])
+            self.value_label = tk.Label(self.window_show_results, text=results[i][1])
             self.value_label.grid(column=1, row=i)
-            self.state_label = tk.Label(self.window, text=results[i][2])
+            self.state_label = tk.Label(self.window_show_results, text=results[i][2])
             self.state_label.grid(column= 2, row = i)
 
     def rules_type_input(self):
@@ -207,7 +207,7 @@ class tkinterclass:
         self.runs = 0
         self.back_pointer = 10
         self.state_label['text'] = 'state: q0'
-        self.machine = Turing_Machine()
+        self.machine = TuringMachine()
         self.direction = None
         self.input_to_tape = list(self.input_to_tape)
         self.window.after(10, self.run_machine)
@@ -258,4 +258,4 @@ class tkinterclass:
         except:
             self.delay = self.set_delay / 100
 
-machine = tkinterclass()
+machine = TuringMachineTkinter()
