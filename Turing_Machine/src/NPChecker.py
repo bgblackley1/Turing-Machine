@@ -53,3 +53,6 @@ class NPChecker:
 
     def list(self): 
         return(self.final_state)
+
+    def set_Turing_machine(self, machine):
+        self.machine = machine

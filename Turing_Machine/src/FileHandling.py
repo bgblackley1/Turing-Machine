@@ -1,8 +1,9 @@
-class FileHandling():
+from File import File
+ 
+class FileHandling(File):
         
     def set_rule(self, current_state,value_on_tape,next_state,next_value,direction):
         rules = open("rules.txt", "a")
-        current_state,value_on_tape,next_state,next_value,direction = self.fetch_input()
         rules.writelines(current_state+','+value_on_tape+','+next_state+','+next_value+','+direction +'\n')
         rules.close()
 
@@ -21,3 +22,13 @@ class FileHandling():
         for i in range(len(data)):
             file.write(data[i])
         file.close
+
+    def get_rules(self):
+        with open('rules.txt') as file:
+            data = file.readlines()
+        return(data)
+
+    def clear_file(self):
+        file = open("rules.txt", "r+")
+        file.truncate(0)
+        file.close()

@@ -11,11 +11,9 @@ class tkinterclass:
         self.window = tk.Tk()
         self.file_handler = FileHandling()
         self.window.title("Turing Machine")
-        file = open("rules.txt","r+")
+        self.file_handler.clear_file()
         self.set_delay = 1000
         self.delay = 1000
-        file.truncate(0)
-        file.close()
         self.rules_type_input()
         self.preset_option = False
 
@@ -121,8 +119,7 @@ class tkinterclass:
 
     def display_rules(self):
         row = 3
-        with open('rules.txt') as file:
-            rules = file.readlines()
+        rules = self.file_handler.get_rules()
         for rule in rules:
             self.rule = tk.Label(self.window, text = rule)
             self.rule.grid(row = row, column = 0)
