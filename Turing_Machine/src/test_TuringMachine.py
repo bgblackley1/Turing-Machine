@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from FileHandling import FileHandling
+from FileHandlingStub import FileHandling
 from TuringMachine import TuringMachine
 from TuringMachineFake import TuringMachineFake
 
